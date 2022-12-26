@@ -1,28 +1,19 @@
-{{- if .Values.autoscaling.enabled }}
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "helm-chart-test.fullname" . }}
+  name: simple-web-1.0
+  namespace: mark
   labels:
-    {{- include "helm-chart-test.labels" . | nindent 4 }}
+    functionGroup: simple-web
+    service: simple-web-service
+    deployedby: mark
+    version: "1.0"
+    wait: "false"
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "helm-chart-test.fullname" . }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
-  metrics:
-    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
-    {{- end }}
-    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: memory
-        targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
-    {{- end }}
-{{- end }}
+    name: simple-web-1-0
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70

@@ -1,15 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm-chart-test.fullname" . }}
+  name: simple-web-markp-1-0
+  namespace: mark
   labels:
-    {{- include "helm-chart-test.labels" . | nindent 4 }}
+    functionGroup: simple-web
+    service: simple-web-service
+    deployedby: markp
+    version: "1.0"
+    wait: "false"
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "helm-chart-test.selectorLabels" . | nindent 4 }}
+    functionGroup: simple-web
+    service: simple-web-service
+    version: "1.0"
+    deploymentTag: "1.0"
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: server-port
+  type: LoadBalancer
