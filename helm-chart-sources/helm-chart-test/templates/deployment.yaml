@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-web-v1.0
+  name: {{ printf "%s-%s" .Release.Name .Chart.Name }}
   namespace: mark
   labels:
     functionGroup: simple-web
@@ -32,8 +32,8 @@ spec:
     spec:
       containers:
         - name: simple-web
-          image: acrinterview.azurecr.io/simple-web
-          imagePullPolicy: IfNotPresent
+          name: {{ printf "%s:%s" .Values.image.repository  .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POD_NAME
               valueFrom:
