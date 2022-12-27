@@ -46,8 +46,8 @@ pipeline {
                 export KUBECONFIG=/var/lib/jenkins/.kube/config-markp
                 kubelogin convert-kubeconfig -l msi
                 cd helm-training/helm-chart-sources
-                ls -ltrR
                 echo "DEPLOY"
+                helm install simple-web helm-chart-test    
                 '''
               } // steps
            }  // stage
@@ -66,8 +66,8 @@ pipeline {
                 export KUBECONFIG=/var/lib/jenkins/.kube/config-markp
                 kubelogin convert-kubeconfig -l msi
                 cd helm-training/helm-chart-sources
-                ls -ltrR
                 echo "DESTROY"
+                helm uninstall simple-web
                 '''
                 } //steps
            } // stage
