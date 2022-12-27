@@ -1,7 +1,6 @@
 pipeline {
     agent any
 
-    
     parameters { 
        choice(name: 'Action', choices: ['deploy', 'destroy'], description: ' Deploy or Destroy the Helm Chart')
     }
@@ -27,16 +26,39 @@ pipeline {
                 sh '''
                 #!/bin/bash
                 # ensure clean first
-                rm -rf helm-training || true
-                
+                rm -rf helm-training || true               
                 git clone https://github.com/maprager/helm-training.git
-                cd helm-training/helm-chart-sources
-                ls -ltrR
-                
-                helm list
                 '''
              } // steps
            } // stage
+           
+           stage ('Deploy') {
+             steps {
+                sh '''
+                #!/bin/bash
+                az login -i
+                az aks get-credentials -n devops-interview-aks -g  devops-interview-rg
+                export KUBECONFIG=/var/lib/jenkins/.kube/config-markp
+                kubelogin convert-kubeconfig -l msi
+                cd helm-training/helm-chart-sources
+                ls -ltrR
+                '''
+              }
+           }
+           
+           stage (Destroy') {
+              steps {
+                sh '''
+                #!/bin/bash
+                az login -i
+                az aks get-credentials -n devops-interview-aks -g  devops-interview-rg
+                export KUBECONFIG=/var/lib/jenkins/.kube/config-markp
+                kubelogin convert-kubeconfig -l msi
+                cd helm-training/helm-chart-sources
+                ls -ltrR
+                '''
+                }
+           }
            
            stage ('Cleanup' ) {
               steps {
