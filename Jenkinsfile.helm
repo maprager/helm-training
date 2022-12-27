@@ -2,9 +2,13 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Test') {
             steps {
+                sh '''
+                #!/bin/bash
+                helm list
                 echo 'Hello World'
+                '''
             }
         }
     }
