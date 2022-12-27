@@ -10,11 +10,10 @@ pipeline {
                 ip a
                 echo 'Hello World'
                 az login -i
-                #az aks get-credentials -n devops-interview-aks -g  devops-interview-rg
-                #export KUBECONFIG=/root/.kube/config
-                #kubelogin convert-kubeconfig -l msi
+                az aks get-credentials -n devops-interview-aks -g  devops-interview-rg
+                export KUBECONFIG=/root/.kube/config
+                kubelogin convert-kubeconfig -l msi
                 helm list
-                echo 'Hello World'
                 '''
             }
         }
