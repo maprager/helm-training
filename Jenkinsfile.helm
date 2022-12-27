@@ -20,6 +20,8 @@ pipeline {
                 helm list
                 
                 git clone https://github.com/maprager/helm-training.git
+                cd helm-training
+                cd 
                 ls -ltrR
                 '''
             }
