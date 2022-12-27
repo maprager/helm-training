@@ -19,10 +19,15 @@ pipeline {
                 set +x
                 helm list
                 
+                # ensure clean first
+                rm -rf helm-training || true
                 git clone https://github.com/maprager/helm-training.git
                 cd helm-training/helm-chart-sources
-                cd 
                 ls -ltrR
+                
+                # cleanup
+                cd
+                rm -rf helm-training || true
                 '''
             }
         }
