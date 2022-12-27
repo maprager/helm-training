@@ -12,7 +12,7 @@ pipeline {
                 echo 'Hello World'
                 az login -i
                 az aks get-credentials -n devops-interview-aks -g  devops-interview-rg
-                export KUBECONFIG=/jenkins/.kube/config-markp
+                export KUBECONFIG=/var/lib/jenkins/.kube/config-markp
                 kubelogin convert-kubeconfig -l msi
                 helm list
                 '''
