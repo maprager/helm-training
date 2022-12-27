@@ -43,10 +43,10 @@ pipeline {
                 cd helm-training/helm-chart-sources
                 ls -ltrR
                 '''
-              }
-           }
+              } // steps
+           }  // stage
            
-           stage (Destroy') {
+           stage ('Destroy') {
               steps {
                 sh '''
                 #!/bin/bash
@@ -57,8 +57,8 @@ pipeline {
                 cd helm-training/helm-chart-sources
                 ls -ltrR
                 '''
-                }
-           }
+                } //steps
+           } // stage
            
            stage ('Cleanup' ) {
               steps {
