@@ -6,6 +6,8 @@ pipeline {
             steps {
                 sh '''
                 #!/bin/bash
+                pwd
+                ip a
                 helm list
                 echo 'Hello World'
                 '''
