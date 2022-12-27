@@ -18,6 +18,9 @@ pipeline {
                 kubelogin convert-kubeconfig -l msi
                 set +x
                 helm list
+                
+                git clone https://github.com/maprager/helm-training.git
+                ls -ltrR
                 '''
             }
         }
