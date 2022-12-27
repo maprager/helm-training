@@ -33,6 +33,11 @@ pipeline {
            } // stage
            
            stage ('Deploy') {
+             when {
+                expression {
+                   params.Action == "deploy"
+                }
+             }
              steps {
                 sh '''
                 #!/bin/bash
@@ -42,11 +47,17 @@ pipeline {
                 kubelogin convert-kubeconfig -l msi
                 cd helm-training/helm-chart-sources
                 ls -ltrR
+                echo "DEPLOY"
                 '''
               } // steps
            }  // stage
            
            stage ('Destroy') {
+              when {
+                expression {
+                   params.Action == "destroy"
+                }
+              }
               steps {
                 sh '''
                 #!/bin/bash
@@ -56,6 +67,7 @@ pipeline {
                 kubelogin convert-kubeconfig -l msi
                 cd helm-training/helm-chart-sources
                 ls -ltrR
+                echo "DESTROY"
                 '''
                 } //steps
            } // stage
