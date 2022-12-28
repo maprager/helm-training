@@ -1,0 +1,29 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ template "helm-chart-test.fullname" . }}-keda
+  namespace: mark
+  labels:
+    name: {{ template "helm-chart-test.fullname" . }}
+spec:
+  scaleTargetRef:
+    name: {{ template "helm-chart-test.fullname" . }}
+  pollingInterval: 20
+  cooldownPeriod:  200
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: cron
+    metadata:
+       timezone: Etc/UTC    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+       start: 0 8 * * *     # Every minute between 8 am
+       end: 0 12 * * *      # Every minute between 12 am
+       desiredReplicas: "2"
+  - type: cpu
+    metadata:
+       type: Utilization
+       value: "70"
+  - type: memory
+    metadata:
+       type: Utilization
+       value: "70"
